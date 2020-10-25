@@ -1,3 +1,5 @@
+const { request } = require("express")
+
 let express = require("express"),
     bodyParser = require("body-parser"),
     app = express()
@@ -54,11 +56,35 @@ app.post("/webhook",(req,res)=>{
 })
 
 const handleMessage = (sender_psid, received_message) =>{
-    let response
+    let response = "Heureux de vous rencontrez"
 
     if(received_message.text){
-
+        callSendAPI(sender_psid,response)
     }
+}
+
+const callSendAPI = (sender_psid, response, cb=null) =>{
+    let request_body = {
+        "recipient" : {
+            "id" : sender_psid
+        },
+        "message" :  response
+    }
+
+    request({
+        "uri" : "https://graph.facebook.com/v3.1/me/messages",
+        "qs": {"access_token" : "EAAm0ubtuIicBADn1dmrllIPZAuY8hdUcM1T7JKyXBRVaq7bL8lYNYEMz016QudSMo4Rkkn54d5BX2GOpkqSZCGrJRcBdjpOohm7jDHIum05DRrcxmGlpvjXzBQEnnDnE0d7a6fsUqpD8RmP6vZAIOF4ZAMJXB5jNr5kMPsPmrwZDZD"},
+        "method" : "POST",
+        "json": request_body
+    },(err, res,body)=>{
+        if(!err){
+            if(cb){
+                cb()
+            }
+        }else{
+            console.error("Unable to send message ",err)
+        }
+    })
 }
 
 const handlePostback = (sender_psid, received_postback) =>{
