@@ -31,7 +31,7 @@ app.get("/webhook",(req,res)=>{
 app.post("/webhook",(req,res)=>{
     let body = req.body
 
-    console.log(body.object)
+    
     if(body.object==="page"){
         
         body.entry.forEach(entry=>{
@@ -42,9 +42,9 @@ app.post("/webhook",(req,res)=>{
             console.log("Sender PSID ",sender_psid)
 
             if(webhook_event.message){
-                console.log(webhook_event.message)
+                handleMessage(sender_psid, webhook_event.message)
             }else{
-                console.log(webhook_event.postback)
+                handlePostback(sender_psid, webhook_event.postback)
             }
         })
         res.status(200).send("EVENT_RECEIVED")
@@ -52,6 +52,24 @@ app.post("/webhook",(req,res)=>{
         res.sendStatus(404)
     }
 })
+
+const handleMessage = (sender_psid, received_message) =>{
+    let response
+
+    if(received_message.text){
+
+    }
+}
+
+const handlePostback = (sender_psid, received_postback) =>{
+    let response
+
+    let payload = received_postback.payload
+    console.log("payload ",payload)
+    if(payload === "GET_STARTED"){
+
+    }
+}
 
 app.listen(process.env.PORT || 3000,()=>{
     console.log("app is running")
