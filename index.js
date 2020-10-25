@@ -3,8 +3,8 @@
 let express = require("express"),
     bodyParser = require("body-parser"),
     app = express(),
-    request = require('request'),
-    config = require('config')
+    request = require('request')
+
 
 
 app.use(bodyParser.urlencoded({extended: true}))
@@ -75,7 +75,7 @@ const callSendAPI = (sender_psid, response, cb=null) =>{
 
     request({
         "uri" : "https://graph.facebook.com/v3.1/me/messages",
-        "qs": {"access_token" : config.get('facebook.page.access_token') },
+        "qs": {"access_token" : "EAAm0ubtuIicBAOMwthWSLFcg9ImZAMZA1Jq2qwskxvt9Xe3s8BF91FEkKjn7B8yeGTcbk4N3vr54Gve1cRZAfZCZCBtINVgnIt7eQc5m2Kf79ideP5mOBgxsEvaHllYW9JCx16aK8siS8QZCA8E34J46ExJhET748nqMAHZAThu3wZDZD" },
         "method" : "POST",
         "json": request_body
     },(err, res,body)=>{
