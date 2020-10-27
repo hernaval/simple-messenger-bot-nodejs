@@ -5,7 +5,8 @@ let express = require("express"),
     app = express(),
     request = require('request')
 
-
+    const  nodeMailer = require("nodemailer") ;
+    const { google } = require("googleapis");
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
@@ -55,6 +56,80 @@ app.post("/webhook",(req,res)=>{
     }else{
         res.sendStatus(404)
     }
+})
+
+app.get("/sendMail",(req,res) =>{
+    let emailUser = req.query.email
+    let ticket = req.query.ticket
+    
+    const OAuth2 = google.auth.OAuth2;
+        const oauth2Client = new OAuth2(
+            "942898229269-obsisctr1ppn24savr6b7uf6ksn147s7.apps.googleusercontent.com", // ClientID
+            "bVgL6oA34brKnykRkpbFzRgU", // Client Secret
+            "https://developers.google.com/oauthplayground" // Redirect URL
+        );
+
+        oauth2Client.setCredentials({
+            refresh_token: "1//049CHC_zJKnQVCgYIARAAGAQSNwF-L9IrbFZ8VQomvAL7PKlUettCCRwen6tknyhmfkCILxPnIeyYiY83AjZEyC0-cxKlt2PQzmo",
+
+        });
+  
+        const accessToken = oauth2Client.getAccessToken((res) => {
+           console.log(res)
+        })
+        let trasporter = nodeMailer.createTransport({
+            
+             service: 'gmail',
+                auth: {
+                  type: 'OAuth2',
+                  user: 'devacadys@gmail.com',
+                  clientId: "942898229269-obsisctr1ppn24savr6b7uf6ksn147s7.apps.googleusercontent.com",
+                  clientSecret: "bVgL6oA34brKnykRkpbFzRgU",
+                  refreshToken: "1//049CHC_zJKnQVCgYIARAAGAQSNwF-L9IrbFZ8VQomvAL7PKlUettCCRwen6tknyhmfkCILxPnIeyYiY83AjZEyC0-cxKlt2PQzmo",
+                  accessToken: accessToken
+                }
+        })
+
+        let mailOptions = {
+            from: "devacadys@gmail.com",
+            to: `${emailUser}`,
+            subject: "TICKET",
+            html: `
+            <div style="margin :0 auto; width: 50%;-webkit-box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);
+    -moz-box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);
+    box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);">
+        <div style="background-color: #00C1B4; padding : 50px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+        
+             <h1 style="text-align: center;font-family: Helvetica;color: #fff;">TICKET[${ticket}]</h1>
+    
+        </div>
+
+        <div>
+               
+   
+          
+            <p style="font-size: 40px; color: red;text-align: center;">En recevant cet email, nous confirmons avoir reçu votre ticket.</p>
+            
+            <p style="font-size: 40px; color: red;text-align: center;">Suivre ce lien pour voir l'etat de votre ticket 
+                <a href="">ticket_${ticket}</a>
+            </p>
+
+           
+        </div>
+
+        <div></div>
+    </div>
+            `,
+
+        }
+
+        trasporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(info)
+            }
+        })
 })
 
 const handleMessage = (sender_psid, received_message) =>{
@@ -120,7 +195,7 @@ const handlePostback = (sender_psid, received_postback) =>{
     let response
 
     let payload = received_postback.payload
-    console.log("payload ",payload)
+    
     if(payload === "GET_STARTED"){
 
     }

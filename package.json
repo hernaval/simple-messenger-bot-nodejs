@@ -13,6 +13,8 @@
     "body-parser": "^1.19.0",
     "config": "^3.3.2",
     "express": "^4.17.1",
+    "googleapis": "^61.0.0",
+    "nodemailer": "^6.4.14",
     "request": "^2.88.2"
   }
 }
