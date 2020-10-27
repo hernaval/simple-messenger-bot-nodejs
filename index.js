@@ -58,10 +58,37 @@ app.post("/webhook",(req,res)=>{
 })
 
 const handleMessage = (sender_psid, received_message) =>{
-    let response = "Heureux de vous rencontrez"
+    let response 
 
     if(received_message.text){
-        callSendAPI(sender_psid,response)
+        response = askTemplate();
+    }
+
+    callSendAPI(sender_psid, response);
+}
+
+
+const askTemplate = (text) => {
+    return {
+        "attachment":{
+            "type":"template",
+            "payload":{
+                "template_type":"button",
+                "text": text,
+                "buttons":[
+                    {
+                        "type":"postback",
+                        "title":"Cats",
+                        "payload":"CAT_PICS"
+                    },
+                    {
+                        "type":"postback",
+                        "title":"Dogs",
+                        "payload":"DOG_PICS"
+                    }
+                ]
+            }
+        }
     }
 }
 
