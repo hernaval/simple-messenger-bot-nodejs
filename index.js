@@ -108,9 +108,9 @@ app.get("/sendMail",(req,res) =>{
                
    
           
-            <p style="font-size: 40px; color: red;text-align: center;">En recevant cet email, nous confirmons avoir reçu votre ticket.</p>
+            <p style="font-size: 12px; color: red;text-align: center;">En recevant cet email, nous confirmons avoir reçu votre ticket.</p>
             
-            <p style="font-size: 40px; color: red;text-align: center;">Suivre ce lien pour voir l'etat de votre ticket 
+            <p style="font-size: 12px; color: red;text-align: center;">Suivre ce lien pour voir l'etat de votre ticket 
                 <a href="">ticket_${ticket}</a>
             </p>
 
@@ -130,6 +130,8 @@ app.get("/sendMail",(req,res) =>{
                 console.log(info)
             }
         })
+
+        res.json("ok");
 })
 
 const handleMessage = (sender_psid, received_message) =>{
