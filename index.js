@@ -111,7 +111,7 @@ app.get("/sendMail",(req,res) =>{
             <p style="font-size: 12px; color: red;text-align: center;">En recevant cet email, nous confirmons avoir reçu votre ticket.</p>
             
             <p style="font-size: 12px; color: red;text-align: center;">Suivre ce lien pour voir l'etat de votre ticket 
-                <a href="">ticket_${ticket}</a>
+                <a href="http://acadysticket.lech0958.odns.fr/suivi.php?ticket=${$ticket}">ticket_${ticket}</a>
             </p>
 
            
