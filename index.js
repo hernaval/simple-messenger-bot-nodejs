@@ -98,7 +98,7 @@ app.get("/sendMail",(req,res) =>{
             <div style="margin :0 auto; width: 50%;-webkit-box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);
     -moz-box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);
     box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);">
-        <div style="background-color: ##3e75cf; padding : 50px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+        <div style="background-color: #3e75cf; padding : 50px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
         
              <h1 style="text-align: center;font-family: Helvetica;color: #fff;">TICKET[${ticket}]</h1>
     
