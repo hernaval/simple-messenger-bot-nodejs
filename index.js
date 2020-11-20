@@ -134,6 +134,84 @@ app.get("/sendMail",(req,res) =>{
         res.json("ok");
 })
 
+app.get("/notification",(req,res) =>{
+    let emailUser = req.query.email
+    let ticket = req.query.ticket
+    let ticketTitle = req.query.title
+    
+    const OAuth2 = google.auth.OAuth2;
+        const oauth2Client = new OAuth2(
+            "942898229269-obsisctr1ppn24savr6b7uf6ksn147s7.apps.googleusercontent.com", // ClientID
+            "bVgL6oA34brKnykRkpbFzRgU", // Client Secret
+            "https://developers.google.com/oauthplayground" // Redirect URL
+        );
+
+        oauth2Client.setCredentials({
+            refresh_token: "1//049CHC_zJKnQVCgYIARAAGAQSNwF-L9IrbFZ8VQomvAL7PKlUettCCRwen6tknyhmfkCILxPnIeyYiY83AjZEyC0-cxKlt2PQzmo",
+
+        });
+  
+        const accessToken = oauth2Client.getAccessToken((res) => {
+           console.log(res)
+        })
+        let trasporter = nodeMailer.createTransport({
+            
+             service: 'gmail',
+                auth: {
+                  type: 'OAuth2',
+                  user: 'devacadys@gmail.com',
+                  clientId: "942898229269-obsisctr1ppn24savr6b7uf6ksn147s7.apps.googleusercontent.com",
+                  clientSecret: "bVgL6oA34brKnykRkpbFzRgU",
+                  refreshToken: "1//049CHC_zJKnQVCgYIARAAGAQSNwF-L9IrbFZ8VQomvAL7PKlUettCCRwen6tknyhmfkCILxPnIeyYiY83AjZEyC0-cxKlt2PQzmo",
+                  accessToken: accessToken
+                }
+        })
+
+        let mailOptions = {
+            from: "devacadys@gmail.com",
+            to: `${emailUser}`,
+            subject: `Le ticket ${ticket} -${ticketTitle}  a été mis à jour`,
+            html: `
+            <div style="margin :0 auto; width: 50%;-webkit-box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);
+    -moz-box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);
+    box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);">
+        <div style="background-color: #3e75cf; padding : 50px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+        
+             <h1 style="text-align: center;font-family: Helvetica;color: #fff;">TICKET[${ticket}] MIS A JOUR</h1>
+    
+        </div>
+
+        <div>
+               
+   
+          
+            <p style="font-size: 12px; color: red;text-align: center;">En recevant cet email, un membre de l'équipe vient modifier un ticket.</p>
+            
+            <p style="font-size: 12px; color: red;text-align: center;">Suivre le lien ci-après pour voir l'etat de votre ticket :
+                <a href="https://frugality.tech/suivi.php?ticket_key=${ticket}">ici</a>
+            </p>
+
+           
+        </div>
+
+        <div></div>
+    </div>
+            `,
+
+        }
+
+        trasporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(info)
+            }
+        })
+
+        res.json("ok");
+})
+
+
 const handleMessage = (sender_psid, received_message) =>{
     let response 
 
