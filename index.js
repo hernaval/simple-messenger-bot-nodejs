@@ -211,6 +211,83 @@ app.get("/notification",(req,res) =>{
         res.json("ok");
 })
 
+app.get("/forgot",(req,res) =>{
+    let emailUser = req.query.email
+   
+
+    let tok = req.query.token
+    const OAuth2 = google.auth.OAuth2;
+        const oauth2Client = new OAuth2(
+            "942898229269-obsisctr1ppn24savr6b7uf6ksn147s7.apps.googleusercontent.com", // ClientID
+            "bVgL6oA34brKnykRkpbFzRgU", // Client Secret
+            "https://developers.google.com/oauthplayground" // Redirect URL
+        );
+
+        oauth2Client.setCredentials({
+            refresh_token: "1//049CHC_zJKnQVCgYIARAAGAQSNwF-L9IrbFZ8VQomvAL7PKlUettCCRwen6tknyhmfkCILxPnIeyYiY83AjZEyC0-cxKlt2PQzmo",
+
+        });
+  
+        const accessToken = oauth2Client.getAccessToken((res) => {
+           console.log(res)
+        })
+        let trasporter = nodeMailer.createTransport({
+            
+             service: 'gmail',
+                auth: {
+                  type: 'OAuth2',
+                  user: 'devacadys@gmail.com',
+                  clientId: "942898229269-obsisctr1ppn24savr6b7uf6ksn147s7.apps.googleusercontent.com",
+                  clientSecret: "bVgL6oA34brKnykRkpbFzRgU",
+                  refreshToken: "1//049CHC_zJKnQVCgYIARAAGAQSNwF-L9IrbFZ8VQomvAL7PKlUettCCRwen6tknyhmfkCILxPnIeyYiY83AjZEyC0-cxKlt2PQzmo",
+                  accessToken: accessToken
+                }
+        })
+
+        let mailOptions = {
+            from: "devacadys@gmail.com",
+            to: `${emailUser}`,
+            subject: `Lien de réinitialisation de mot de passe`,
+            html: `
+            <div style="margin :0 auto; width: 50%;-webkit-box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);
+    -moz-box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);
+    box-shadow: 0px 5px 8px -1px rgba(97,97,97,0.82);">
+        <div style="background-color: #3e75cf; padding : 50px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+        
+             <h1 style="text-align: center;font-family: Helvetica;color: #fff;">REINITIALISATION MOT DE PASSE</h1>
+    
+        </div>
+
+        <div>
+               
+   
+          
+            <p style="font-size: 12px; color: red;text-align: center;">Ne vous inquietez pas, vous pouvez réinitialiser votre mot de passe à tout moment.</p>
+            
+            <p style="font-size: 12px; color: red;text-align: center;">Suivre le lien ci-après pour la réinitialisation :
+                <a href="http://diagnosticcom.lech0958.odns.fr/reinitialisation?token="${tok}">ici</a>
+            </p>
+            
+           
+        </div>
+
+        <div></div>
+    </div>
+            `,
+
+        }
+
+        trasporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(info)
+            }
+        })
+
+        res.json("ok");
+})
+
 
 const handleMessage = (sender_psid, received_message) =>{
     let response 
