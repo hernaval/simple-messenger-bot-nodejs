@@ -58,6 +58,31 @@ app.post("/webhook",(req,res)=>{
     }
 })
 
+app.get("pizzanotification",(req,res)=>{
+    let token = req.query.token
+
+    var push = require("web-push")
+
+//let res = push.generateVAPIDKeys();
+
+
+let validKeys = {
+    publicKey : 'BPrZ8OliMNQ_cjx1veGnCY1d__Q9thLT_nYZIVR3H_3kTtLFkOBHa6qczE3SLrNIE-G7vh3oc_lPdwpyYWm22Lk',
+    privateKey : 'CBdiGzdyKZrtTaW1_WB4dQtbAyJB15T76pjyzJPg3X8'
+}
+
+
+ push.setVapidDetails("mailto:hernavalasco@gmail.com",validKeys.publicKey, validKeys.privateKey)
+
+let sub = JSON.parse(token)
+    
+
+ push.sendNotification(sub, "test message")
+
+ res.json("ok")
+
+})
+
 app.get("/sendMail",(req,res) =>{
     let emailUser = req.query.email
     let ticket = req.query.ticket
