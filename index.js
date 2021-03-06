@@ -67,9 +67,11 @@ app.get("pizzanotification",(req,res)=>{
 
 
 let validKeys = {
-    publicKey : 'BPrZ8OliMNQ_cjx1veGnCY1d__Q9thLT_nYZIVR3H_3kTtLFkOBHa6qczE3SLrNIE-G7vh3oc_lPdwpyYWm22Lk',
-    privateKey : 'CBdiGzdyKZrtTaW1_WB4dQtbAyJB15T76pjyzJPg3X8'
-}
+    publicKey: 'BMEKiispcXxYy3d7kFLYYUSRGsX-sHn6uJJgFmLHlttwAIZfyABe-1AoNJTN5Dq-6nHG2sW5iayVZxbL8lOdRmk',
+    privateKey: 'nUYtDfGmFOUSyTlHLTIeICbohrXrMb8cLZZaU6n45GU'
+  }
+  
+  
 
 
  push.setVapidDetails("mailto:hernavalasco@gmail.com",validKeys.publicKey, validKeys.privateKey)
