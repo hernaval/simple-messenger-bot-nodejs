@@ -58,7 +58,7 @@ app.post("/webhook",(req,res)=>{
     }
 })
 
-app.get("pizzanotification",(req,res)=>{
+app.get("/pizzanotification",(req,res)=>{
     let token = req.query.token
 
     var push = require("web-push")
