@@ -59,7 +59,7 @@ app.post("/webhook",(req,res)=>{
 })
 
 app.get("/pizzanotification",(req,res)=>{
-    let token = req.query.token
+    //let token = req.query.token
 
     var push = require("web-push")
 
@@ -75,9 +75,9 @@ let validKeys = {
 
  push.setVapidDetails("mailto:hernavalasco@gmail.com",validKeys.publicKey, validKeys.privateKey)
 
-let sub = JSON.parse(token)
-    
-console.log("token ",sub)
+
+ let sub ={"endpoint":"https://fcm.googleapis.com/fcm/send/cg3f_zBq2yU:APA91bE6Fd_RM1ULBiPBfMtSAINa_zGPu7wOUMV9DkCRVnkI4L7uYMe29oCaFNU3qv2204nECi6hJ5GUt24LIx8yPX3ZuxzSmzJN99NGjLHCy0R1tLp-gkwxCi_1kBnOMlYOQN-UwYaU","expirationTime":null,"keys":{"p256dh":"BP_1LGwR4g5mun0t0LiuyqT65BsyoZWCzyHDsON0Ox2XMCx8iYUwfGkNWETDrADdAHa6_L4XOPOokzIA8bC7FYI","auth":"v6qVMejBcv_nB02KkByjBw"}}
+
  push.sendNotification(sub, "test message")
 
  res.json("ok")
