@@ -67,10 +67,9 @@ app.get("/pizzanotification",(req,res)=>{
 
 
 let validKeys = {
-    publicKey: 'BMEKiispcXxYy3d7kFLYYUSRGsX-sHn6uJJgFmLHlttwAIZfyABe-1AoNJTN5Dq-6nHG2sW5iayVZxbL8lOdRmk',
-    privateKey: 'nUYtDfGmFOUSyTlHLTIeICbohrXrMb8cLZZaU6n45GU'
-  }
-  
+    publicKey: 'BFH8Oze4td_fsVWc_rmlTEM1qRtd4c3PGimCJZs6ZdQ9XLar_fO8YE7IMzAUHCJrQcVRycWJCQYz5E8w0ex9y1o',
+    privateKey: 'V3bcCJrHL23s63JK__FlmEIX6FmIzAfveNBBj3vRfIE'
+}
   
 
 
