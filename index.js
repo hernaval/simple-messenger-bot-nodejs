@@ -78,7 +78,7 @@ let validKeys = {
 
 let sub = JSON.parse(token)
     
-
+console.log("token ",sub)
  push.sendNotification(sub, "test message")
 
  res.json("ok")
