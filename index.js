@@ -99,7 +99,6 @@ app.get("/pizzanotification",(req,res)=>{
         sendAt: new Date(), // 2016-07-25 10:09 UTC
         // optional, add the notification to custom categories for stats aggregation
         // see https://pushpad.xyz/docs/monitoring
-        customMetrics: ['examples', 'another_metric'] // up to 3 metrics per notification
       });
 
       notification.broadcast(function(err, result) { /*...*/ })
