@@ -8,8 +8,18 @@ let express = require("express"),
     const  nodeMailer = require("nodemailer") ;
     const { google } = require("googleapis");
 
+    var pushpad = require('pushpad');
+
+    var project = new pushpad.Pushpad({
+      authToken: "35cd9573a316ea85f041b8e709c6d6d2",
+      projectId: 7610
+    });
+
+var cors = require("cors")
+
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
+app.use(cors())
 
 app.get("/",(req,res)=>{
     res.send("Hello word")
@@ -58,19 +68,18 @@ app.post("/webhook",(req,res)=>{
     }
 })
 
-app.get("/registerPizzaNotification",(req, res) =>{
+app.get("/regtopizza",(req, res) =>{
+    let userId = req.query.userId 
+    let hmac = project.signatureFor(userId)
 
+    res.json({
+        signature : hmac,
+        succcess : true
+    })
 })
 
 app.get("/pizzanotification",(req,res)=>{
   
-    var pushpad = require('pushpad');
-
-    var project = new pushpad.Pushpad({
-      authToken: "35cd9573a316ea85f041b8e709c6d6d2",
-      projectId: 7610
-    });
-
     var notification = new pushpad.Notification({
         project: project,
         body: 'De nouvelles commandes sont en attente',
