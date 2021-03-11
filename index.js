@@ -99,7 +99,7 @@ app.get("/pizzanotification",(req,res)=>{
         actions: [
           {
             title: 'voir commandes',
-            targetUrl: 'https://pizzareunion.re/prestataire/index.php?Num_prestataire=20', // optional
+            targetUrl: 'https://pizzareunion.re/prestataire/index.php?Num_prestataire=34', // optional
             icon: 'https://example.com/assets/button-icon.png', // optional
             action: 'voir' // optional
           }
