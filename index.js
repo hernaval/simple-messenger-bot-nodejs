@@ -59,29 +59,46 @@ app.post("/webhook",(req,res)=>{
 })
 
 app.get("/pizzanotification",(req,res)=>{
-    //let token = req.query.token
-
-    var push = require("web-push")
-
-//let res = push.generateVAPIDKeys();
-
-
-let validKeys = {
-    publicKey: 'BFH8Oze4td_fsVWc_rmlTEM1qRtd4c3PGimCJZs6ZdQ9XLar_fO8YE7IMzAUHCJrQcVRycWJCQYz5E8w0ex9y1o',
-    privateKey: 'V3bcCJrHL23s63JK__FlmEIX6FmIzAfveNBBj3vRfIE'
-}
   
+    var pushpad = require('pushpad');
 
+    var project = new pushpad.Pushpad({
+      authToken: "35cd9573a316ea85f041b8e709c6d6d2",
+      projectId: 7610
+    });
 
- push.setVapidDetails("mailto:hernavalasco@gmail.com",validKeys.publicKey, validKeys.privateKey)
+    var notification = new pushpad.Notification({
+        project: project,
+        body: 'De nouvelles commandes sont en attente',
+        title: 'Pizzareunion', // optional, defaults to your project name
+        targetUrl: 'https://pizzareunion.re', // optional, defaults to your project website
+        iconUrl: 'https://example.com/assets/icon.png', // optional, defaults to the project icon
+        imageUrl: 'https://example.com/assets/image.png', // optional, an image to display in the notification content
+        ttl: 604800, // optional, drop the notification after this number of seconds if a device is offline
+        requireInteraction: true, // optional, prevent Chrome on desktop from automatically closing the notification after a few seconds
+        silent: false, // optional, enable this option if you want a mute notification without any sound
+        urgent: false, // optional, enable this option only for time-sensitive alerts (e.g. incoming phone call)
+        customData: '123', // optional, a string that is passed as an argument to action button callbacks
+        // optional, add some action buttons to the notification
+        // see https://pushpad.xyz/docs/action_buttons
+        actions: [
+          {
+            title: 'voir commande',
+            targetUrl: 'https://pizzareunion.re', // optional
+            icon: 'https://example.com/assets/button-icon.png', // optional
+            action: 'voir' // optional
+          }
+        ],
+        starred: true, // optional, bookmark the notification in the Pushpad dashboard (e.g. to highlight manual notifications)
+        // optional, use this option only if you need to create scheduled notifications (max 5 days)
+        // see https://pushpad.xyz/docs/schedule_notifications
+        sendAt: new Date(), // 2016-07-25 10:09 UTC
+        // optional, add the notification to custom categories for stats aggregation
+        // see https://pushpad.xyz/docs/monitoring
+        customMetrics: ['examples', 'another_metric'] // up to 3 metrics per notification
+      });
 
-
- let sub ={"endpoint":"https://fcm.googleapis.com/fcm/send/cg3f_zBq2yU:APA91bE6Fd_RM1ULBiPBfMtSAINa_zGPu7wOUMV9DkCRVnkI4L7uYMe29oCaFNU3qv2204nECi6hJ5GUt24LIx8yPX3ZuxzSmzJN99NGjLHCy0R1tLp-gkwxCi_1kBnOMlYOQN-UwYaU","expirationTime":null,"keys":{"p256dh":"BP_1LGwR4g5mun0t0LiuyqT65BsyoZWCzyHDsON0Ox2XMCx8iYUwfGkNWETDrADdAHa6_L4XOPOokzIA8bC7FYI","auth":"v6qVMejBcv_nB02KkByjBw"}}
-
- push.sendNotification(sub, "test message")
-
- res.json("ok")
-
+      notification.broadcast(function(err, result) { /*...*/ })
 })
 
 app.get("/sendMail",(req,res) =>{
