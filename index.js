@@ -80,13 +80,15 @@ app.get("/regtopizza",(req, res) =>{
 
 app.get("/pizzanotification",(req,res)=>{
   
+    let presta = req.query.presta
+
     var notification = new pushpad.Notification({
         project: project,
         body: 'De nouvelles commandes sont en attente',
         title: 'Pizzareunion', // optional, defaults to your project name
         targetUrl: 'https://pizzareunion.re', // optional, defaults to your project website
-        iconUrl: 'https://example.com/assets/icon.png', // optional, defaults to the project icon
-        imageUrl: 'https://example.com/assets/image.png', // optional, an image to display in the notification content
+        iconUrl: 'https://pizzareunion.re/reunion/images/Logo-v.4-coins-arrondis-petit.png', // optional, defaults to the project icon
+        imageUrl: 'https://pizzareunion.re/reunion/images/Logo-v.4-coins-arrondis-petit.png', // optional, an image to display in the notification content
         ttl: 604800, // optional, drop the notification after this number of seconds if a device is offline
         requireInteraction: true, // optional, prevent Chrome on desktop from automatically closing the notification after a few seconds
         silent: false, // optional, enable this option if you want a mute notification without any sound
@@ -96,8 +98,8 @@ app.get("/pizzanotification",(req,res)=>{
         // see https://pushpad.xyz/docs/action_buttons
         actions: [
           {
-            title: 'voir commande',
-            targetUrl: 'https://pizzareunion.re', // optional
+            title: 'voir commandes',
+            targetUrl: 'https://pizzareunion.re/prestataire/index.php?Num_prestataire='+presta, // optional
             icon: 'https://example.com/assets/button-icon.png', // optional
             action: 'voir' // optional
           }
