@@ -58,6 +58,10 @@ app.post("/webhook",(req,res)=>{
     }
 })
 
+app.get("/registerPizzaNotification",(req, res) =>{
+
+})
+
 app.get("/pizzanotification",(req,res)=>{
   
     var pushpad = require('pushpad');
@@ -99,6 +103,8 @@ app.get("/pizzanotification",(req,res)=>{
       });
 
       notification.broadcast(function(err, result) { /*...*/ })
+
+      res.json("ok")
 })
 
 app.get("/sendMail",(req,res) =>{
