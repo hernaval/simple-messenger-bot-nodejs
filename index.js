@@ -112,7 +112,7 @@ app.get("/pizzanotification",(req,res)=>{
         // see https://pushpad.xyz/docs/monitoring
       });
 
-      notification.broadcast(function(err, result) { /*...*/ })
+      notification.deliverTo([presta], function(err, result) { /*...*/ });
 
       res.json("ok")
 })
