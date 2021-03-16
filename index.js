@@ -78,6 +78,45 @@ app.get("/regtopizza",(req, res) =>{
     })
 })
 
+app.get("/pizzaandroidnotification",async (req, res) =>{
+    let playerId = req.query.player_id
+    let presta = req.query.presta
+
+    const OneSignal = require('onesignal-node');    
+    const client = new OneSignal.Client('725c5621-ee47-4d06-a709-2c9123878d8c', 'YTUwYmI2NDgtYmRiNy00YmY0LWJhMjQtNjliNjg4ZTVmN2Qz');
+
+    const notification = {
+        contents: {
+          'en': "De nouvelles commandes sont en attente",
+        },
+        headings : {
+          'en' : "Commandes clients"
+        },
+        include_player_ids:[playerId],
+        url : "https://pizzareunion.re/prestataire/index.php?Num_prestataire="+presta,
+        small_icon : "https://pizzareunion.re/reunion/images/Logo-v.4-coins-arrondis-petit.png",
+        large_icon : "https://pizzareunion.re/reunion/images/Logo-v.4-coins-arrondis-petit.png"
+    };
+
+    try{
+        let response = await  client.createNotification(notification)
+    
+        console.log(response.body);
+        
+    }catch(e){
+    
+        if (e instanceof OneSignal.HTTPError) {
+            // When status code of HTTP response is not 2xx, HTTPError is thrown.
+            console.log(e.statusCode);
+            console.log(e.body);
+          }
+    
+    }
+
+    res.json("ok send android")
+
+})
+
 app.get("/pizzanotification",(req,res)=>{
   
     let presta = req.query.presta

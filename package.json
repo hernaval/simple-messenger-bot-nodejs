@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "googleapis": "^61.0.0",
     "nodemailer": "^6.4.14",
+    "onesignal-node": "^3.2.1",
     "pushpad": "^0.9.0",
     "request": "^2.88.2",
     "web-push": "^3.4.4"
