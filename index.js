@@ -87,7 +87,7 @@ app.get("/pizzaandroidnotification",async (req, res) =>{
     const OneSignal = require('onesignal-node');    
     const APP_ID = process.env.ONESIGNAL_APP_ID
     const API_KEY = process.env.ONESIGNAL_API_KEY
-    const client = new OneSignal.Client(APP_ID, APP_ID);
+    const client = new OneSignal.Client(APP_ID, API_KEY);
 
     const notification = {
         contents: {
