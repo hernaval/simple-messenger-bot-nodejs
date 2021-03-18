@@ -79,11 +79,15 @@ app.get("/regtopizza",(req, res) =>{
 })
 
 app.get("/pizzaandroidnotification",async (req, res) =>{
+
+    require("dotenv").config()
     let playerId = req.query.player_id
     let presta = req.query.presta
 
     const OneSignal = require('onesignal-node');    
-    const client = new OneSignal.Client('725c5621-ee47-4d06-a709-2c9123878d8c', 'YTUwYmI2NDgtYmRiNy00YmY0LWJhMjQtNjliNjg4ZTVmN2Qz');
+    const APP_ID = process.env.ONESIGNAL_APP_ID
+    const API_KEY = process.env.ONESIGNAL_API_KEY
+    const client = new OneSignal.Client(APP_ID, APP_ID);
 
     const notification = {
         contents: {
